@@ -27,6 +27,7 @@ class API {
     suspend fun getImagenAleatoria():String {
         val msg:String
         val response = service.imagenAleatoria()
+
         /*obtenemos la respuesta y aplicamos la logica de que deseamos hacer con los campos*/
         if(response.body()?.status.equals("success")){
             msg = response.body()?.message ?: "" }
@@ -35,4 +36,24 @@ class API {
         Log.d("API_PRUEBA ", "message es " + response.body()?.message)
         return msg
     }
+
+    suspend fun getListImages(raza: String): List<String>? {
+        val response = service.getImagesByBreed(raza)
+
+        Log.d("API_PRUEBA ", "status es " + response.body()?.status)
+        Log.d("API_PRUEBA ", "message es " + response.body()?.message)
+
+        response.body()?.message?.let {
+            for(url_imagen in response.body()?.message!!){
+                Log.d("API_PRUEBA ", "imagen es " + url_imagen)
+            }
+        //si no es nulo for (url_imagen in response.body()?.message!!) {
+        // solo para comprobar tengamos algo Log.d("API_PRUEBA ", "imagen es " + url_imagen) } }
+        // return response.body()?.message
+        }
+        return response.body()?.message
+        }
+
+
+
 }
